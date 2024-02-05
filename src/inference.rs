@@ -13,7 +13,7 @@ pub fn predict_duration(
         "speaker_id" => ndarray::arr1(&[speaker_id as i64])
     ]?;
     let output_tensors = session.run(input_tensors)?;
-    let output = output_tensors[0]
+    let output = output_tensors["phoneme_length"]
         .extract_tensor::<f32>()?
         .view()
         .iter()
@@ -51,7 +51,7 @@ pub fn predict_intonation(
         "speaker_id" => ndarray::arr1(&[speaker_id as i64]),
     ]?;
     let output_tensors = session.run(input_tensors)?;
-    let output = output_tensors[0]
+    let output = output_tensors["f0_list"]
         .extract_tensor::<f32>()?
         .view()
         .to_owned()
@@ -84,7 +84,7 @@ pub fn decode(
         "speaker_id" => ndarray::arr1(&[speaker_id as i64])
     ]?;
     let output_tensors = session.run(input_tensors)?;
-    let output = output_tensors[0]
+    let output = output_tensors["wave"]
         .extract_tensor::<f32>()?
         .view()
         .to_owned()
